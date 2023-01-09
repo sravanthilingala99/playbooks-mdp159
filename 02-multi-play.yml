@@ -1,0 +1,37 @@
+#ansible n1 -m file -a "path=/home/centos/n1_dir state=directory"
+#ansible n2 -m file -a "path=/home/ubuntu/n2_dir state=directory'
+
+# Playbook with multiple plays and single task
+---
+- name: Update Node1
+  hosts: n1
+  
+
+  tasks:
+  - name: Create n1 directory
+    file:
+      path: /home/centos/n1_dir
+      state: directory
+
+- name: Update Node2
+  hosts: n2
+
+
+  tasks:
+  - name: Create n2 directory
+    file:
+      path: /home/ubuntu/n2_dir
+      state: directory
+
+- name: Update all
+  hosts: all
+
+
+  tasks:
+  - name: Create common directory
+    file:
+      path: /tmp/common_dir
+      state: directory
+
+
+...
