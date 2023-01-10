@@ -1,0 +1,28 @@
+#Copy the os.html from master to appropriate nodes with their names
+# scp
+---
+- name: Setup Apache Web Server
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Copy Date App
+    copy:
+      src: date.php
+      dest: /var/www/html/date.php
+    when: ansible_distribution == "CentOS"
+  
+  - name: Install PHP
+    yum:
+      name: php
+      state: present
+    when: ansible_distribution == "CentOS"
+
+  - name: Restart HTTPD
+    service:
+      name: httpd
+      state: restarted
+    when: ansible_distribution == "CentOS"
+
+
+...
