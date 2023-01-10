@@ -1,0 +1,43 @@
+#Copy the os.html from master to appropriate nodes with their names
+# scp
+---
+- name: config Apache Web Server
+  hosts: all
+  become: yes
+  vars:
+    user_name: ravi
+    custom_http_port: 8090
+
+  tasks:
+  - name: Copy config to Centos httpd
+    template:
+      src: httpd.j2
+      dest: /etc/httpd/conf/httpd.conf
+    when: ansible_distribution == "CentOS"
+
+  - name: Set Permissive for HTTPD
+    selinux:
+      policy: targeted
+      state: permissive
+    when: ansible_distribution == "CentOS"
+
+  
+  - name: Restart HTTPD
+    service:
+      name: httpd
+      state: restarted
+    when: ansible_distribution == "CentOS"
+
+  - name: Copy config to Ubuntu apache2
+    template:
+      src: ports.j2
+      dest: /etc/apache2/ports.conf
+    when: ansible_distribution == "Ubuntu"
+ 
+  - name: Restarted APACHE2
+    service:
+      name: apache2
+      state: restarted
+    when: ansible_distribution == "Ubuntu"
+   
+...
