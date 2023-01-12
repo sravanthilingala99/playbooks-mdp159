@@ -1,0 +1,11 @@
+---
+- name: Deploy HTML App
+  hosts: all
+  become: yes
+
+   
+  roles:
+    - apache
+    - html-deploy
+    
+...

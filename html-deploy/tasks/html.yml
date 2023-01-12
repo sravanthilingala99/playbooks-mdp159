@@ -1,0 +1,9 @@
+
+---
+  
+  - name: Deploy App
+    git:
+      dest: /var/www/html 
+      repo: https://github.com/ravi2krishna/ecomm.git
+    
+...

@@ -1,0 +1,11 @@
+---
+- name: Deploy PHP App
+  hosts: all
+  become: yes
+
+   
+  roles:
+    - apache
+    - php-deploy
+    
+...
